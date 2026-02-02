@@ -333,6 +333,7 @@ export async function loadPuzzle(pNumber) {
   renderSaveList();
 
   getTop10(appState.curPuzzle.name).then((data) => {
+    console.log(data);
     if (data.ok) {
       appState.leaderBoard.topScores = data.top;
       renderLeaderBoard();

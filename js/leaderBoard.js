@@ -2,9 +2,9 @@ const ENDPOINT = "https://script.google.com/macros/s/AKfycbwdJrY_eWAYytQwzx9cVF8
 
 export async function getTop10(puzzleId) {
     try {
-        const res = await JSON.parse(fetch(`${ENDPOINT}?action=top&puzzle_id=${encodeURIComponent(puzzleId)}`));
+        const res = await fetch(`${ENDPOINT}?action=top&puzzle_id=${encodeURIComponent(puzzleId)}`);
         if (!res.ok) throw new Error(`HTTP ${res.status}`);
-        return await res;
+        return await JSON.parse(res);
     } catch (err) {
         console.error('Failed to fetch top scores:', err);
         return { ok: false, top: [], error: err.message };
@@ -29,7 +29,7 @@ export async function submitScore({ puzzleId, initials, timeMs, meta, pastProgre
             body: JSON.stringify(Object.fromEntries(params))
         });
         if (!res.ok) throw new Error(`HTTP ${res.status}`);
-        return await JSON.parse(res);
+        return;
     } catch (err) {
         console.error('Failed to submit score:', err);
         throw err;
