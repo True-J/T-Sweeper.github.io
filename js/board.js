@@ -331,8 +331,8 @@ export async function loadPuzzle(pNumber) {
   // Refresh the UI to display restored regions and saves
   renderRegionList();
   renderSaveList();
-
-  getTop10(appState.curPuzzle.name).then((data) => {
+  console.log(puzzleName);
+  getTop10(puzzleName).then((data) => {
     console.log(data);
     if (data.ok) {
       appState.leaderBoard.topScores = data.top;
