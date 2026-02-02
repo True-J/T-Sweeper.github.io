@@ -1,9 +1,14 @@
 const ENDPOINT = "https://script.google.com/macros/s/AKfycbwdJrY_eWAYytQwzx9cVF8Qfw2sZr2oGLZsWMHO5YMNTI4UxhJVa8D01bEBt1g9zbvv/exec";
 
 export async function getTop10(puzzleId) {
-    const url = `${ENDPOINT}?action=top&puzzle_id=${encodeURIComponent(puzzleId)}`;
     try {
-        const res = await fetch(url);
+        const res = await fetch(ENDPOINT, {
+            method: 'GET',
+            headers: {
+                'Content-Type': 'text/plain;charset=utf-8',
+            },
+            body: JSON.stringify({ action: 'top', puzzle_id: puzzleId }),
+        });
         if (!res.ok) throw new Error(`HTTP ${res.status}`);
         return await res.json();
     } catch (err) {
@@ -23,8 +28,11 @@ export async function submitScore({ puzzleId, initials, timeMs, meta, pastProgre
         params.append('past_progress', pastProgress);
         
         const res = await fetch(ENDPOINT, {
-            method: "POST",
-            body: params
+            method: 'POST',
+            headers: {
+                'Content-Type': 'text/plain;charset=utf-8',
+            },
+            body: JSON.stringify(Object.fromEntries(params))
         });
         if (!res.ok) throw new Error(`HTTP ${res.status}`);
         return await res.json();
