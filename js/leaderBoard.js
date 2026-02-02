@@ -16,7 +16,7 @@ export async function submitScore({ puzzleId, initials, timeMs, meta, pastProgre
     try {
         const res = await fetch(ENDPOINT, {
             method: "POST",
-            headers: { "Content-Type": "application/json" },
+            headers: { "Content-Type": "text/plain" },
             body: JSON.stringify({ action: "submit", puzzle_id: puzzleId, initials, time_ms: timeMs, meta, past_progress: pastProgress })
         });
         if (!res.ok) throw new Error(`HTTP ${res.status}`);
