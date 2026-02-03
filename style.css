@@ -521,12 +521,12 @@ body {
 }
 
 .cell.cx {
-    background: rgb(254, 255, 255);
-    color: rgb(255, 0, 1)
+    background: rgb(255, 255, 255);
+    color: rgb(255, 0, 0)
 }
 
 .cell.cf {
-    background: rgb(93, 192, 192);
+    background: rgb(92, 192, 192);
 }
 
 .cell.ce {
