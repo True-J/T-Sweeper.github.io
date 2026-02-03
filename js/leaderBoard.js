@@ -11,9 +11,9 @@ export function getTop10(puzzleId) {
             resolve(data);
         };
 
-        const script = document.createElement("script");
-        script.src = `${ENDPOINT}?action=top&puzzle_id=${encodeURIComponent(puzzleId)}&callback=${callbackName}`;
-        document.body.appendChild(script);
+        //const script = document.createElement("script");
+        //script.src = `${ENDPOINT}?action=top&puzzle_id=${encodeURIComponent(puzzleId)}&callback=${callbackName}`;
+        //document.body.appendChild(script);
     });
 }
 
