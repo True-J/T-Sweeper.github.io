@@ -11,8 +11,6 @@ import { wireCheckSolutionButton, wireResetProgressButton } from "./actions.js";
 loadPastProgressFromStorage();
 
 // Initial UI state
-if (dom.leaderBoardBtn) dom.leaderBoardBtn.style.display = "none";
-if (dom.settingsBtn) dom.settingsBtn.style.display = "none";
 if (dom.notesBox) dom.notesBox.style.display = "flex";
 
 // Board

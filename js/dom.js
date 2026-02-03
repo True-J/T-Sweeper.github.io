@@ -22,6 +22,7 @@ export const dom = {
   menuBtn: byId("menuBtn"),
   leaderBoard: byId("leaderboard"),
   leaderBoardName: byId("leaderboardName"),
+  leaderBoardNameMobile: byId("leaderboardNamem"),
 
   // Rail buttons
   railButtons: qsa(".rail-btn"),

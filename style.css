@@ -565,6 +565,10 @@ body {
     }
 }
 
+.page-footer {
+    display: none;
+}
+
 /* =========================================================
    Mobile refactor (REPLACE your existing max-width:600px block)
    ========================================================= */
@@ -608,6 +612,14 @@ body {
 
         /* prevents 300ms delay + reduces accidental double-tap zoom on controls */
         touch-action: manipulation;
+    }
+
+    .sidebar-footer {
+        display: none;
+    }
+
+    .page-footer {
+        display: block;
     }
 
     /* Content should flow under the top bar */
@@ -685,9 +697,11 @@ body {
     /* Critical: stop absolute positioning on mobile so it can scroll */
     .puzzleGameBox {
         position: static;
+        /* important: stop absolute overlay behavior */
         width: 100%;
         height: auto;
-        display: flex;
+        /* important: allow page to scroll */
+        display: flex !important;
         flex-direction: column;
         overflow: visible;
         margin-top: var(--pad);
@@ -697,20 +711,21 @@ body {
     .board-area {
         border-right: 0;
         border-bottom: 3px solid black;
+
         overflow: auto;
-        /* allows pan/scroll */
+        /* allows panning if too wide */
         -webkit-overflow-scrolling: touch;
+
         padding: 10px;
 
         display: flex;
         justify-content: center;
-        /* centers when it fits */
+        /* centers board when it fits */
         align-items: flex-start;
 
-        /* DO NOT set touch-action here if you want pinch-zoom to keep working */
+        /* do NOT add touch-action here if you want pinch-zoom */
     }
 
-    /* Undo desktop absolute placement so it can center in flex */
     .bigMS-grid {
         position: relative;
         top: 0;
@@ -723,35 +738,39 @@ body {
         padding: 12px;
     }
 
-    /* Two-column controls like your drawing:
-     left: buttons
-     right: notes/regions/saves */
     .right-grid {
-        display: grid;
-        grid-template-columns: minmax(160px, 1fr) minmax(160px, 1fr);
+        display: grid !important;
+        grid-template-columns: 1fr 1fr;
+        /* buttons left, notes right */
         gap: 12px;
         height: auto;
     }
 
-    /* HUD spans full width above both columns */
-    .left-rail {
-        display: contents;
-        /* lets HUD + button column participate in grid cleanly */
+    .button-col {
+        grid-column: 1;
+    }
+
+    .notes-col {
+        grid-column: 2;
+        display: flex;
+        flex-direction: column;
+        gap: 10px;
+        min-height: 0;
     }
 
     .hud {
         grid-column: 1 / -1;
         display: flex;
-        flex-direction: row;
         justify-content: space-between;
         gap: 10px;
         font-size: 16px;
         margin-bottom: 4px;
     }
 
-    /* Button stack stays in left column */
-    .button-col {
-        grid-column: 1;
+    /* HUD spans full width above both columns */
+    .left-rail {
+        display: contents;
+        /* lets HUD + button column participate in grid cleanly */
     }
 
     .button-stack {
@@ -767,15 +786,6 @@ body {
 
         /* reduce double-tap zoom on buttons */
         touch-action: manipulation;
-    }
-
-    /* Notes/regions/saves stay in right column */
-    .notes-col {
-        grid-column: 2;
-        display: flex;
-        flex-direction: column;
-        gap: 10px;
-        min-height: 0;
     }
 
     /* Region autosolve message is now above notes-col (after your HTML move) */

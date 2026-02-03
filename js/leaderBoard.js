@@ -39,8 +39,7 @@ export async function submitScore({ puzzleId, initials, timeMs, meta, pastProgre
 
   const body = new Blob([JSON.stringify(payload)], { type: "text/plain;charset=utf-8" });
   navigator.sendBeacon(ENDPOINT, body); // boolean: queued or not
-  await new Promise((r) => setTimeout(r, 600));
-  getTop10(puzzleId).then((data) => {
+  await getTop10(puzzleId).then((data) => {
     if (data.ok) {
       renderLeaderBoard(data.top);
     } else {
@@ -52,14 +51,18 @@ export async function submitScore({ puzzleId, initials, timeMs, meta, pastProgre
 export function renderLeaderBoard(scoresArray) {
   for (let i = 0; i < scoresArray.length; i++) {
     document.getElementById("name" + i).textContent = scoresArray[i].initials;
+    document.getElementById("name" + i + "m").textContent = scoresArray[i].initials;
     const totalSec = Math.floor(scoresArray[i].time_ms / 1000);
     const hh = String(Math.floor(totalSec / 3600)).padStart(2, "0");
     const mm = String(Math.floor((totalSec % 3600) / 60)).padStart(2, "0");
     const ss = String(totalSec % 60).padStart(2, "0");
     document.getElementById("time" + i).textContent = `${hh}:${mm}:${ss}`;
+    document.getElementById("time" + i + "m").textContent = `${hh}:${mm}:${ss}`;
   }
   for (let i = scoresArray.length; i <= 9; i++) {
     document.getElementById("name" + i).textContent = "";
     document.getElementById("time" + i).textContent = "";
+    document.getElementById("name" + i + "m").textContent = "";
+    document.getElementById("time" + i + "m").textContent = "";
   }
 }

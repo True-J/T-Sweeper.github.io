@@ -234,6 +234,7 @@ export async function loadPuzzle(pNumber) {
   appState.curPuzzle.name = puzzleName;
   appState.curPuzzle.isLeaderboardAttempt = true; // Fresh puzzle is a leaderboard attempt by default
   dom.leaderBoardName.textContent = `${difficulty} Puzzle ${pNumber}`;
+  dom.leaderBoardNameMobile.textContent = `${difficulty} Puzzle ${pNumber}`;
   appState.curPuzzle.unsolvedPuzzle = structuredClone(found.unsolved);
   appState.curPuzzle.solvedPuzzle = structuredClone(found.solved);
 
