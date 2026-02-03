@@ -185,7 +185,9 @@
         <p class="rule-text">
           Rule 5) For each safe cell that has not been revealed by Rule 2, take the number of Gray Flags it can see (N)
           and
-          <br> the number of non-Gray Flag mines it can see (M). If N >= M then the cell is revealed.
+          <br> the number of non-Gray Flag mines it can see (M). If N > M then the cell is revealed.<br>
+          Another way to think about this is that if a safe cell can see more Gray Flags than non-Gray Flag mines, <br>
+          then it must be revealed.
         </p>
         <br>
         <p class="rule-text">
