@@ -1,4 +1,4 @@
-const ENDPOINT = "https://script.google.com/macros/s/AKfycby9kUQZ6iGHSMtRkmXrnq--puAnK2SSd95M84cbpKFExMcz9xQhzArtEMjlMpbEPP4u/exec";
+const ENDPOINT = "https://script.google.com/macros/s/AKfycbwYwDEeU91U_GVphi6xBQVUjtHPqnmY9MPJnYyqOg8REt4R_rR4ENAC_RDI5UFdfOMo/exec";
 
 export function getTop10(puzzleId) {
   return new Promise((resolve, reject) => {
@@ -40,7 +40,7 @@ export async function submitScore({ puzzleId, initials, timeMs, meta, pastProgre
   const body = new Blob([JSON.stringify(payload)], { type: "text/plain;charset=utf-8" });
   navigator.sendBeacon(ENDPOINT, body); // boolean: queued or not
   await new Promise((r) => setTimeout(r, 600));
-  getTop10(puzzleName).then((data) => {
+  getTop10(puzzleId).then((data) => {
     if (data.ok) {
       renderLeaderBoard(data.top);
     } else {
