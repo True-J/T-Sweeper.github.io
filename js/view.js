@@ -16,17 +16,14 @@ export function setView(viewName) {
 
   // sidebar-only buttons visible while playing
   if (dom.leaderBoard) dom.leaderBoard.style.display = "none";
-  if (dom.backBtn) dom.backBtn.style.display = "none";
 
   if (viewName === "panel") {
     dom.panel && (dom.panel.style.display = "block");
-    if (appState.playingPuzzle && dom.backBtn) dom.backBtn.style.display = "block";
     return;
   }
 
   if (viewName === "rulesList") {
     dom.rulesList && (dom.rulesList.style.display = "block");
-    if (appState.playingPuzzle && dom.backBtn) dom.backBtn.style.display = "block";
     return;
   }
 

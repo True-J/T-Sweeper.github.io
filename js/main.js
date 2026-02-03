@@ -13,7 +13,6 @@ loadPastProgressFromStorage();
 // Initial UI state
 if (dom.leaderBoardBtn) dom.leaderBoardBtn.style.display = "none";
 if (dom.settingsBtn) dom.settingsBtn.style.display = "none";
-if (dom.backBtn) dom.backBtn.style.display = "none";
 if (dom.notesBox) dom.notesBox.style.display = "flex";
 
 // Board
@@ -46,7 +45,6 @@ dom.dailyPuzzleBtn?.addEventListener("click", async () => {
 });
 
 dom.rulesBtn?.addEventListener("click", () => setView("rulesList"));
-dom.backBtn?.addEventListener("click", () => setView("puzzleGameBox"));
 
 // Rail buttons
 dom.railButtons.forEach((btn) => {

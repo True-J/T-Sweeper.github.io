@@ -13,60 +13,6 @@
     <button id="rulesBtn">Rules</button>
     <button id="dailyPuzzleBtn">Start Daily Puzzle</button>
     <button id="menuBtn">Puzzle Select</button>
-    <button id="backToPuzzleBtn">Back</button>
-    <div class="sidebar-footer">
-      <div class="lb" id="leaderboard">
-        <div class="lb-title" id="leaderboardTitle">
-          Leaderboard<br>
-          <div id="leaderboardName">Puzzle 0</div>
-        </div>
-        <div class="lb-grid" id="leaderboardGrid">
-          <!-- Row 0 -->
-          <div class="lb-cell lb-rank" id="rank0">1</div>
-          <div class="lb-cell lb-name" id="name0"></div>
-          <div class="lb-cell lb-time" id="time0"></div>
-          <!-- Row 1 -->
-          <div class="lb-cell lb-rank" id="rank1">2</div>
-          <div class="lb-cell lb-name" id="name1"></div>
-          <div class="lb-cell lb-time" id="time1"></div>
-          <!-- Row 2 -->
-          <div class="lb-cell lb-rank" id="rank2">3</div>
-          <div class="lb-cell lb-name" id="name2"></div>
-          <div class="lb-cell lb-time" id="time2"></div>
-          <!-- Row 3 -->
-          <div class="lb-cell lb-rank" id="rank3">4</div>
-          <div class="lb-cell lb-name" id="name3"></div>
-          <div class="lb-cell lb-time" id="time3"></div>
-          <!-- Row 4 -->
-          <div class="lb-cell lb-rank" id="rank4">5</div>
-          <div class="lb-cell lb-name" id="name4"></div>
-          <div class="lb-cell lb-time" id="time4"></div>
-          <!-- Row 5 -->
-          <div class="lb-cell lb-rank" id="rank5">6</div>
-          <div class="lb-cell lb-name" id="name5"></div>
-          <div class="lb-cell lb-time" id="time5"></div>
-          <!-- Row 6 -->
-          <div class="lb-cell lb-rank" id="rank6">7</div>
-          <div class="lb-cell lb-name" id="name6"></div>
-          <div class="lb-cell lb-time" id="time6"></div>
-          <!-- Row 7 -->
-          <div class="lb-cell lb-rank" id="rank7">8</div>
-          <div class="lb-cell lb-name" id="name7"></div>
-          <div class="lb-cell lb-time" id="time7"></div>
-          <!-- Row 8 -->
-          <div class="lb-cell lb-rank" id="rank8">9</div>
-          <div class="lb-cell lb-name" id="name8"></div>
-          <div class="lb-cell lb-time" id="time8"></div>
-          <!-- Row 9 -->
-          <div class="lb-cell lb-rank" id="rank9">10</div>
-          <div class="lb-cell lb-name" id="name9"></div>
-          <div class="lb-cell lb-time" id="time9"></div>
-        </div>
-      </div>
-      <br>
-      <p>Created by Jacob Truesdale</p>
-      <p>Version 1.0</p>
-    </div>
   </div>
   <div class="content">
     <!--Puzzle Selection Menu-->
@@ -553,7 +499,8 @@
     <div class="modal">
       <h3>Puzzle Already In Progress</h3>
       <p>You have previous progress on this puzzle. Do you want to continue or start over?</p>
-      <p id="progressDisqualifyMsg" style="font-size: 0.9em; color: #ff6b6b; display: none;">Note: Starting over will disqualify this puzzle from leaderboard submission.</p>
+      <p id="progressDisqualifyMsg" style="font-size: 0.9em; color: #ff6b6b; display: none;">Note: Starting over will
+        disqualify this puzzle from leaderboard submission.</p>
       <div class="actions">
         <button id="resumeBtn" type="button">Continue</button>
         <button id="restartBtn" type="button" style="background-color: #ff6b6b;">Start Over</button>
@@ -563,13 +510,69 @@
   <!-- Solution Result Modal -->
   <div id="solutionResultModalOverlay" class="modal-overlay">
     <div class="modal" style="position: relative; display: flex; flex-direction: column; align-items: center;">
-      <button id="solutionResultCloseBtn" type="button" style="position: absolute; top: 10px; right: 10px; background: none; border: none; font-size: 24px; cursor: pointer; color: #000000;">&times;</button>
+      <button id="solutionResultCloseBtn" type="button"
+        style="position: absolute; top: 10px; right: 10px; background: none; border: none; font-size: 24px; cursor: pointer; color: #000000;">&times;</button>
       <br>
       <p id="solutionResultMessage" style="text-align: center;">Your puzzle solution is correct!</p>
       <br>
       <div id="solutionResultActions" class="actions" style="display: none;">
         <button id="revealIncorrectBtn" type="button">Reveal Incorrect Cells</button>
       </div>
+    </div>
+  </div>
+  <div class="page-footer" id="pageFooter">
+    <div class="sidebar-footer">
+      <div class="lb" id="leaderboard">
+        <div class="lb-title" id="leaderboardTitle">
+          Leaderboard<br>
+          <div id="leaderboardName">Puzzle 0</div>
+        </div>
+        <div class="lb-grid" id="leaderboardGrid">
+          <!-- Row 0 -->
+          <div class="lb-cell lb-rank" id="rank0">1</div>
+          <div class="lb-cell lb-name" id="name0"></div>
+          <div class="lb-cell lb-time" id="time0"></div>
+          <!-- Row 1 -->
+          <div class="lb-cell lb-rank" id="rank1">2</div>
+          <div class="lb-cell lb-name" id="name1"></div>
+          <div class="lb-cell lb-time" id="time1"></div>
+          <!-- Row 2 -->
+          <div class="lb-cell lb-rank" id="rank2">3</div>
+          <div class="lb-cell lb-name" id="name2"></div>
+          <div class="lb-cell lb-time" id="time2"></div>
+          <!-- Row 3 -->
+          <div class="lb-cell lb-rank" id="rank3">4</div>
+          <div class="lb-cell lb-name" id="name3"></div>
+          <div class="lb-cell lb-time" id="time3"></div>
+          <!-- Row 4 -->
+          <div class="lb-cell lb-rank" id="rank4">5</div>
+          <div class="lb-cell lb-name" id="name4"></div>
+          <div class="lb-cell lb-time" id="time4"></div>
+          <!-- Row 5 -->
+          <div class="lb-cell lb-rank" id="rank5">6</div>
+          <div class="lb-cell lb-name" id="name5"></div>
+          <div class="lb-cell lb-time" id="time5"></div>
+          <!-- Row 6 -->
+          <div class="lb-cell lb-rank" id="rank6">7</div>
+          <div class="lb-cell lb-name" id="name6"></div>
+          <div class="lb-cell lb-time" id="time6"></div>
+          <!-- Row 7 -->
+          <div class="lb-cell lb-rank" id="rank7">8</div>
+          <div class="lb-cell lb-name" id="name7"></div>
+          <div class="lb-cell lb-time" id="time7"></div>
+          <!-- Row 8 -->
+          <div class="lb-cell lb-rank" id="rank8">9</div>
+          <div class="lb-cell lb-name" id="name8"></div>
+          <div class="lb-cell lb-time" id="time8"></div>
+          <!-- Row 9 -->
+          <div class="lb-cell lb-rank" id="rank9">10</div>
+          <div class="lb-cell lb-name" id="name9"></div>
+          <div class="lb-cell lb-time" id="time9"></div>
+        </div>
+      </div>
+      <br>
+      <p>Created by Jacob Truesdale</p>
+      <p>Version 1.0</p>
     </div>
   </div>
 </body>

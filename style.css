@@ -565,26 +565,29 @@ body {
     }
 }
 
-/* Phone */
+/* =========================================================
+   Mobile refactor (REPLACE your existing max-width:600px block)
+   ========================================================= */
 @media (max-width: 600px) {
     :root {
         --pad: 12px;
         --gap: 10px;
 
-        /* Shrink the board cells for phone screens */
-        --cell: 26px;
+        /* keep cells usable on phones; adjust as needed */
+        --cell: 24px;
     }
 
-    /* Switch to vertical app layout */
+    /* Let the document scroll normally on mobile */
     body {
         flex-direction: column;
         height: auto;
         min-height: 100dvh;
         overflow: auto;
-        /* don't hard-lock the whole page */
     }
 
-    /* Sidebar becomes a top bar */
+    /* ---------------------------------------
+     Top bar (sidebar becomes horizontal nav)
+     --------------------------------------- */
     .sidebar {
         width: 100%;
         border-right: 0;
@@ -602,141 +605,214 @@ body {
         font-size: 16px;
         white-space: nowrap;
         flex: 0 0 auto;
+
+        /* prevents 300ms delay + reduces accidental double-tap zoom on controls */
+        touch-action: manipulation;
     }
 
-    .sidebar-footer {
-        display: none;
-        /* optional: remove to save vertical space */
-    }
-
+    /* Content should flow under the top bar */
     .content {
         padding: var(--pad);
-        overflow: auto;
+        overflow: visible;
+        /* important: stop inner scroll fights */
     }
 
-    /* Panel: turn into a stacked layout */
+    /* ---------------------------------------
+     Puzzle selection panel (tabs on top, grid scrolls)
+     --------------------------------------- */
     .panel {
-        height: calc(100dvh - (2 * var(--pad)));
+        position: fixed;
+        inset: var(--pad);
+        width: auto;
+        height: auto;
+        display: none;
+        z-index: 1000;
     }
 
     .panel-inner {
+        height: 100%;
+        display: flex;
         flex-direction: column;
     }
 
-    .panel-main {
-        border-right: 0;
-        border-bottom: 3px solid black;
-    }
-
+    /* Put difficulty rail at top and keep it visible */
     .panel-rail {
         width: 100%;
+        order: -1;
         flex-direction: row;
         gap: 10px;
         overflow-x: auto;
         padding: 10px;
+        position: sticky;
+        top: 0;
+        z-index: 2;
     }
 
     .panel-rail button {
         flex: 0 0 auto;
+        touch-action: manipulation;
     }
 
-    /* Puzzle game box: one column, board on top, controls below */
+    /* Grid area scrolls under sticky tabs */
+    .panel-main {
+        flex: 1;
+        overflow: auto;
+        border-right: 0;
+        border-bottom: 0;
+    }
+
+    /* Make tiles fit a 2-column-ish layout */
+    .image-grid {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+        gap: 12px;
+        place-items: center;
+    }
+
+    .image-tile,
+    .image-tile .thumb {
+        width: 100%;
+        max-width: 160px;
+    }
+
+    .image-tile .thumb {
+        height: 160px;
+    }
+
+    /* ---------------------------------------
+     Puzzle play box (board on top, controls below in 2 cols)
+     --------------------------------------- */
+
+    /* Critical: stop absolute positioning on mobile so it can scroll */
     .puzzleGameBox {
-        height: calc(100dvh - (2 * var(--pad)));
+        position: static;
+        width: 100%;
+        height: auto;
         display: flex;
-        /* override desktop grid */
         flex-direction: column;
+        overflow: visible;
+        margin-top: var(--pad);
     }
 
+    /* Board area: center it, allow panning if it exceeds width */
     .board-area {
         border-right: 0;
         border-bottom: 3px solid black;
         overflow: auto;
-        /* allow panning if board still exceeds width */
+        /* allows pan/scroll */
         -webkit-overflow-scrolling: touch;
+        padding: 10px;
+
+        display: flex;
+        justify-content: center;
+        /* centers when it fits */
+        align-items: flex-start;
+
+        /* DO NOT set touch-action here if you want pinch-zoom to keep working */
+    }
+
+    /* Undo desktop absolute placement so it can center in flex */
+    .bigMS-grid {
+        position: relative;
+        top: 0;
+        left: 0;
     }
 
     .control-area {
         height: auto;
-        overflow: auto;
-    }
-
-    /* Controls/notes: collapse to one column */
-    .right-grid {
-        grid-template-columns: 1fr;
-        gap: var(--gap);
-        height: auto;
-    }
-
-    .hud {
-        font-size: 16px;
-    }
-
-    .control-area button {
-        font-size: 15px;
-        padding: 10px;
-    }
-
-    /* Rules examples: stack vertically */
-    .rule-examples {
-        grid-template-columns: 1fr;
-        gap: 12px;
-        justify-items: center;
-    }
-
-    .rule-textex {
+        overflow: visible;
         padding: 12px;
     }
 
-    /* Image tiles: allow smaller min sizes */
-    .image-grid {
-        grid-template-columns: repeat(auto-fill, minmax(120px, 1fr));
-    }
-
-    .image-tile {
-        width: 120px;
-    }
-
-    .image-tile .thumb {
-        width: 120px;
-        height: 130px;
-    }
-
-    /* Modal: fit the screen */
-    .modal {
-        width: min(360px, calc(100% - 24px));
-    }
-
-    /* Make puzzle area stack */
-    .puzzleGameBox {
-        display: flex;
-        flex-direction: column;
-    }
-
-    /* Ensure board is top, controls below */
-    .board-area {
-        order: 1;
-        width: 100%;
-    }
-
-    .control-area {
-        order: 2;
-        width: 100%;
-        display: flex;
-        flex-direction: column;
-        gap: var(--gap);
-    }
-
-    /* Buttons full-width and stacked */
-    .control-area button,
-    .button-stack {
-        width: 100%;
-    }
-
-    /* Notes and other grid children should stack */
+    /* Two-column controls like your drawing:
+     left: buttons
+     right: notes/regions/saves */
     .right-grid {
+        display: grid;
+        grid-template-columns: minmax(160px, 1fr) minmax(160px, 1fr);
+        gap: 12px;
+        height: auto;
+    }
+
+    /* HUD spans full width above both columns */
+    .left-rail {
+        display: contents;
+        /* lets HUD + button column participate in grid cleanly */
+    }
+
+    .hud {
+        grid-column: 1 / -1;
+        display: flex;
+        flex-direction: row;
+        justify-content: space-between;
+        gap: 10px;
+        font-size: 16px;
+        margin-bottom: 4px;
+    }
+
+    /* Button stack stays in left column */
+    .button-col {
+        grid-column: 1;
+    }
+
+    .button-stack {
         display: flex;
         flex-direction: column;
-        gap: var(--gap);
+        gap: 10px;
+    }
+
+    .control-area button {
+        width: 100%;
+        font-size: 15px;
+        padding: 10px;
+
+        /* reduce double-tap zoom on buttons */
+        touch-action: manipulation;
+    }
+
+    /* Notes/regions/saves stay in right column */
+    .notes-col {
+        grid-column: 2;
+        display: flex;
+        flex-direction: column;
+        gap: 10px;
+        min-height: 0;
+    }
+
+    /* Region autosolve message is now above notes-col (after your HTML move) */
+    .resolve-msg {
+        margin: 0;
+    }
+
+    /* Make the lists usable without forcing the whole page into weird nested scroll:
+     On mobile, let them size naturally and scroll if they get tall. */
+    .list-box {
+        flex: 1;
+        min-height: 0;
+    }
+
+    #notesText {
+        width: calc(100% - 16px);
+        height: 110px;
+    }
+
+    .list-frame {
+        max-height: 22vh;
+        /* keeps Regions/Saves from becoming absurdly tall */
+    }
+
+    /* ---------------------------------------
+     Footer at bottom (after your HTML move)
+     --------------------------------------- */
+    .page-footer {
+        background-color: #00a6e8;
+        border-top: 4px solid black;
+        padding: 14px 12px;
+        margin-top: 16px;
+    }
+
+    /* Show footer content on mobile */
+    .page-footer .lb {
+        display: block;
+        margin-bottom: 10px;
     }
 }
