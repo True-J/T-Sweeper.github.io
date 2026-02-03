@@ -601,6 +601,10 @@ body {
         gap: 10px;
         overflow-x: auto;
         -webkit-overflow-scrolling: touch;
+        position: sticky;
+        top: 0;
+        z-index: 2000;
+        background: #00a6e8;
     }
 
     .sidebar button {
@@ -634,11 +638,18 @@ body {
      --------------------------------------- */
     .panel {
         position: fixed;
-        inset: var(--pad);
+        /* top bar height (approx) + padding */
+        top: 80px;
+        left: var(--pad);
+        right: var(--pad);
+        bottom: 80px;
+
         width: auto;
         height: auto;
-        display: none;
-        z-index: 1000;
+
+        z-index: 5000;
+        position: fixed;
+        /* not absolute */
     }
 
     .panel-inner {
@@ -647,31 +658,34 @@ body {
         flex-direction: column;
     }
 
-    /* Put difficulty rail at top and keep it visible */
+    /* tabs stick to the top of the panel */
     .panel-rail {
-        width: 100%;
+        position: sticky;
+        top: 0;
+        z-index: 1;
         order: -1;
+        width: 100%;
         flex-direction: row;
         gap: 10px;
         overflow-x: auto;
+        -webkit-overflow-scrolling: touch;
         padding: 10px;
-        position: sticky;
-        top: 0;
-        z-index: 2;
     }
 
-    .panel-rail button {
-        flex: 0 0 auto;
-        touch-action: manipulation;
-    }
-
-    /* Grid area scrolls under sticky tabs */
+    /* scroll happens in the grid region */
     .panel-main {
         flex: 1;
         overflow: auto;
         border-right: 0;
         border-bottom: 0;
     }
+
+    .panel-rail button {
+        flex: 0 0 auto;
+        touch-action: manipulation;
+        white-space: nowrap;
+    }
+
 
     /* Make tiles fit a 2-column-ish layout */
     .image-grid {
@@ -697,14 +711,23 @@ body {
     /* Critical: stop absolute positioning on mobile so it can scroll */
     .puzzleGameBox {
         position: static;
-        /* important: stop absolute overlay behavior */
+        /* key fix */
+        top: auto;
+        left: auto;
+        z-index: auto;
+
         width: 100%;
+        max-width: 420px;
+        /* keeps it centered like your mock */
+        margin: var(--pad) auto 0;
+
         height: auto;
-        /* important: allow page to scroll */
+        /* key fix */
         display: flex !important;
+        /* keep mobile layout */
         flex-direction: column;
-        overflow: visible;
-        margin-top: var(--pad);
+        overflow: hidden;
+        /* keep borders clean */
     }
 
     /* Board area: center it, allow panning if it exceeds width */
@@ -733,38 +756,35 @@ body {
     }
 
     .control-area {
+        padding: 12px;
         height: auto;
         overflow: visible;
-        padding: 12px;
     }
 
     .right-grid {
-        display: grid !important;
+        display: grid;
         grid-template-columns: 1fr 1fr;
-        /* buttons left, notes right */
+        grid-template-areas:
+            "hud hud"
+            "buttons notes";
         gap: 12px;
-        height: auto;
-    }
-
-    .button-col {
-        grid-column: 1;
-    }
-
-    .notes-col {
-        grid-column: 2;
-        display: flex;
-        flex-direction: column;
-        gap: 10px;
-        min-height: 0;
+        align-items: start;
     }
 
     .hud {
-        grid-column: 1 / -1;
+        grid-area: hud;
         display: flex;
         justify-content: space-between;
-        gap: 10px;
-        font-size: 16px;
-        margin-bottom: 4px;
+    }
+
+    .button-col {
+        grid-area: buttons;
+    }
+
+    .notes-col {
+        grid-area: notes;
+        margin-top: 0;
+        padding-top: 0;
     }
 
     /* HUD spans full width above both columns */
@@ -796,18 +816,21 @@ body {
     /* Make the lists usable without forcing the whole page into weird nested scroll:
      On mobile, let them size naturally and scroll if they get tall. */
     .list-box {
-        flex: 1;
+        display: flex;
+        flex-direction: column;
         min-height: 0;
+    }
+
+    .list-frame {
+        overflow: auto;
+        max-height: clamp(120px, 20vh, 220px);
+        /* adjust if desired */
+        -webkit-overflow-scrolling: touch;
     }
 
     #notesText {
         width: calc(100% - 16px);
         height: 110px;
-    }
-
-    .list-frame {
-        max-height: 22vh;
-        /* keeps Regions/Saves from becoming absurdly tall */
     }
 
     /* ---------------------------------------

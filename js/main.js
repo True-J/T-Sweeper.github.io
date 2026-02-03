@@ -11,13 +11,14 @@ import { wireCheckSolutionButton, wireResetProgressButton } from "./actions.js";
 loadPastProgressFromStorage();
 
 // Initial UI state
+
 if (dom.notesBox) dom.notesBox.style.display = "flex";
 
 // Board
 initBoard();
 
 // Views
-if (dom.puzzleGameBox) dom.puzzleGameBox.style.display = "none";
+dom.puzzleGameBox.style.display = "none";
 
 // Sidebar button wiring
 dom.menuBtn?.addEventListener("click", async () => {
