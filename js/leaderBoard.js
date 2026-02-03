@@ -8,14 +8,14 @@ export function getTop10(puzzleId) {
     const script = document.createElement("script");
 
     window[callbackName] = (data) => {
-      try { delete window[callbackName]; } catch {}
-      try { script.remove(); } catch {}
+      try { delete window[callbackName]; } catch { }
+      try { script.remove(); } catch { }
       resolve(data);
     };
 
     script.onerror = () => {
-      try { delete window[callbackName]; } catch {}
-      try { script.remove(); } catch {}
+      try { delete window[callbackName]; } catch { }
+      try { script.remove(); } catch { }
       reject(new Error("JSONP script failed to load"));
     };
 
@@ -28,41 +28,38 @@ export function getTop10(puzzleId) {
 }
 
 export async function submitScore({ puzzleId, initials, timeMs, meta, pastProgress }) {
-    try {
-        const params = new URLSearchParams();
-        params.append('action', 'submit');
-        params.append('puzzle_id', puzzleId);
-        params.append('initials', initials);
-        params.append('time_ms', timeMs);
-        params.append('meta', meta || '');
-        params.append('past_progress', pastProgress);
+  const payload = {
+    action: "submit",
+    puzzle_id: puzzleId,
+    initials,
+    time_ms: String(timeMs),
+    meta: meta ?? "",
+    past_progress: Number(pastProgress ?? 0),
+  };
 
-        const res = await fetch(ENDPOINT, {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'text/plain;charset=utf-8',
-            },
-            body: JSON.stringify(Object.fromEntries(params))
-        });
-        if (!res.ok) throw new Error(`HTTP ${res.status}`);
-        return;
-    } catch (err) {
-        console.error('Failed to submit score:', err);
-        throw err;
+  const body = new Blob([JSON.stringify(payload)], { type: "text/plain;charset=utf-8" });
+  navigator.sendBeacon(ENDPOINT, body); // boolean: queued or not
+  await new Promise((r) => setTimeout(r, 600));
+  getTop10(puzzleName).then((data) => {
+    if (data.ok) {
+      renderLeaderBoard(data.top);
+    } else {
+      console.error("Failed to fetch top scores:", data.error);
     }
+  });
 }
 
 export function renderLeaderBoard(scoresArray) {
-    for (let i=0; i<scoresArray.length; i++) {
-        document.getElementById("name" + i).textContent = scoresArray[i].initials;
-        const totalSec = Math.floor(scoresArray[i].time_ms / 1000);
-        const hh = String(Math.floor(totalSec / 3600)).padStart(2, "0");
-        const mm = String(Math.floor((totalSec % 3600) / 60)).padStart(2, "0");
-        const ss = String(totalSec % 60).padStart(2, "0");
-        document.getElementById("time" + i).textContent = `${hh}:${mm}:${ss}`;
-    }
-    for (let i=scoresArray.length; i<=9; i++) {
-        document.getElementById("name" + i).textContent = "";
-        document.getElementById("time" + i).textContent = "";
-    }
+  for (let i = 0; i < scoresArray.length; i++) {
+    document.getElementById("name" + i).textContent = scoresArray[i].initials;
+    const totalSec = Math.floor(scoresArray[i].time_ms / 1000);
+    const hh = String(Math.floor(totalSec / 3600)).padStart(2, "0");
+    const mm = String(Math.floor((totalSec % 3600) / 60)).padStart(2, "0");
+    const ss = String(totalSec % 60).padStart(2, "0");
+    document.getElementById("time" + i).textContent = `${hh}:${mm}:${ss}`;
+  }
+  for (let i = scoresArray.length; i <= 9; i++) {
+    document.getElementById("name" + i).textContent = "";
+    document.getElementById("time" + i).textContent = "";
+  }
 }

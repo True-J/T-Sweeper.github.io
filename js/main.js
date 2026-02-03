@@ -33,7 +33,7 @@ loadThumbnails();
 
 export function getDailyPuzzleNumber() {
   const todayUTC = new Date();
-  const startUTC = new Date("2026-01-06T00:00:00Z");
+  const startUTC = new Date("2026-01-05T00:00:00Z");
   //Computes the number of days between the 2 dates
   const daysDiff = Math.floor(Math.abs(todayUTC - startUTC)/ (1000 * 60 * 60 * 24));
   return daysDiff;
