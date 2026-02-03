@@ -24,6 +24,9 @@ export function getTop10(puzzleId) {
       `&callback=${encodeURIComponent(callbackName)}`;
 
     document.head.appendChild(script);
+
+    console.log("ENDPOINT:", ENDPOINT);
+    console.log("JSONP URL:", script.src);
   });
 }
 
