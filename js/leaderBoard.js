@@ -39,6 +39,7 @@ export async function submitScore({ puzzleId, initials, timeMs, meta, pastProgre
 
   const body = new Blob([JSON.stringify(payload)], { type: "text/plain;charset=utf-8" });
   navigator.sendBeacon(ENDPOINT, body); // boolean: queued or not
+  setTimeout(() => {}, 2000);
   getTop10(puzzleId).then((data) => {
     if (data.ok) {
       renderLeaderBoard(data.top);
