@@ -126,6 +126,7 @@ export function openRegionModal(cellCount) {
     dom.regionCancelBtn.onclick = () => cleanup(null);
 
     // Handle auto-resolve checkbox change
+    /* -- Removed because I don't necissarily like this --
     dom.regionAutoResolveInput.onchange = () => {
       if (dom.regionAutoResolveInput.checked) {
         // Hide region modal and show disqualification warning
@@ -140,7 +141,7 @@ export function openRegionModal(cellCount) {
           true // This is for the checkbox, not the final action
         );
       }
-    };
+    };*/
 
     dom.regionOkBtn.onclick = () => {
       const minM = Number(dom.regionMinInput.value);
