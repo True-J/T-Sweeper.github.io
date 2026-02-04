@@ -1,5 +1,5 @@
 // js/board.js
-import { BOARD_SIZE, appState, getInProgressPuzzle } from "./state.js";
+import { BOARD_SIZE, appState, getInProgressPuzzle, isPuzzleCompleted} from "./state.js";
 import { dom } from "./dom.js";
 import { startTimer } from "./timer.js";
 import { updateMineHud, computeTotalMinesFromSolved } from "./hud.js";
@@ -232,7 +232,7 @@ export async function loadPuzzle(pNumber) {
   // Store difficulty so selection page / solved-state can use it
   appState.curPuzzle.difficulty = found.difficulty;
   appState.curPuzzle.name = puzzleName;
-  appState.curPuzzle.isLeaderboardAttempt = true; // Fresh puzzle is a leaderboard attempt by default
+  appState.curPuzzle.isLeaderboardAttempt = isPuzzleCompleted(puzzleName) ? false : true;
   dom.leaderBoardName.textContent = `${difficulty} Puzzle ${pNumber}`;
   dom.leaderBoardNameMobile.textContent = `${difficulty} Puzzle ${pNumber}`;
   appState.curPuzzle.unsolvedPuzzle = structuredClone(found.unsolved);

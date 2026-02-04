@@ -6,7 +6,7 @@ import { stopTimer, startTimer } from "./timer.js";
 import { loadThumbnails } from "./view.js";
 import { showSolutionResult, requireDisqualifyConfirmation, setPendingRevealAction } from "./disqualify.js";
 import { computeTotalMinesFromSolved, computeCurrentFoundMines } from "./hud.js";
-import { submitScore } from "./leaderBoard.js";
+import { getTop10, submitScore } from "./leaderBoard.js";
 
 var isRevealedCells = false;
 
@@ -61,14 +61,17 @@ export function wireCheckSolutionButton() {
       const elapsedMs = appState.timerStartMs ? Date.now() - appState.timerStartMs : 0;
       markPuzzleCompleted(appState.curPuzzle.name, elapsedMs);
       await loadThumbnails();
-      
+      await showSolutionResult(true);
       // Submit to leaderboard if not disqualified
       if (appState.curPuzzle.isLeaderboardAttempt) {
-        const initials = prompt("Enter your 3-letter initials for the leaderboard:", "");
+        var initials = prompt("Enter your 3-letter initials for the leaderboard:", "");
+        initials = (initials ? initials : "") + "---";
+        initials = initials.slice(3);
         if (initials && initials.trim().length === 3) {
+          initials = initials.trim().toUpperCase();
           const pastProgressCount = Object.keys(pastProgress.completedPuzzles).length;
           try {
-            await submitScore({
+            submitScore({
               puzzleId: appState.curPuzzle.name,
               initials: initials.trim().toUpperCase(),
               timeMs: elapsedMs,
@@ -80,8 +83,6 @@ export function wireCheckSolutionButton() {
           }
         }
       }
-      
-      showSolutionResult(true);
     } else {
       // Set up the reveal action for later if user clicks "Reveal Incorrect Cells"
       const revealAction = () => {

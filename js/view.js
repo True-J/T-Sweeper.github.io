@@ -97,7 +97,8 @@ export async function loadThumbnails() {
 
 export async function selectCategory(category) {
   dom.railButtons.forEach((b) => b.classList.toggle("active", b.dataset.category === category));
-  renderImageGrid(thumbnails[category] ?? []);
+  await loadThumbnails();
+  renderImageGrid(thumbnails[category]);
 }
 
 export function renderImageGrid(items) {

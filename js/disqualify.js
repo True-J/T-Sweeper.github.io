@@ -81,7 +81,7 @@ function areAllEditableCellsMarked() {
  * @param {string} customMessage - Custom message to display (optional)
  * @param {boolean} isMineCountError - Whether this is a mine count error (don't show reveal button)
  */
-export function showSolutionResult(isCorrect, incorrectCount = 0, customMessage = null, isMineCountError = false) {
+export async function showSolutionResult(isCorrect, incorrectCount = 0, customMessage = null, isMineCountError = false) {
   const overlay = document.getElementById("solutionResultModalOverlay");
   const message = document.getElementById("solutionResultMessage");
   const actions = document.getElementById("solutionResultActions");
@@ -212,6 +212,5 @@ document.addEventListener("DOMContentLoaded", () => {
 });
 
 export function setPendingRevealAction(action) {
-  console.log("Setting pending reveal action");
   pendingRevealAction = action;
 }

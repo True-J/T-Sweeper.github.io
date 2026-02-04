@@ -80,9 +80,11 @@ export function savePastProgressToStorage() {
  * @param {number} timeMs - Time taken in milliseconds
  */
 export function markPuzzleCompleted(puzzleName, timeMs) {
-  pastProgress.completedPuzzles[puzzleName] = timeMs;
-  // Remove from inProgressPuzzles if it was there
   delete pastProgress.inprogressPuzzles[puzzleName];
+  if (isPuzzleCompleted(puzzleName) && pastProgress.completedPuzzles[puzzleName] <= timeMs) {
+    return; // Already completed with equal or better time
+  }
+  pastProgress.completedPuzzles[puzzleName] = timeMs;
   savePastProgressToStorage();
 }
 
