@@ -28,26 +28,36 @@ export function getTop10(puzzleId) {
 }
 
 export async function submitScore({ puzzleId, initials, timeMs, meta, pastProgress }) {
+  addScoreToLeaderBoard(initials, timeMs);
   const payload = {
     action: "submit",
     puzzle_id: puzzleId,
     initials,
-    time_ms: String(timeMs),
+    time_ms: timeMs,
     meta: meta ?? "",
     past_progress: Number(pastProgress ?? 0),
   };
+  const bodyBlob = new Blob([JSON.stringify(payload)], { type: "text/plain;charset=utf-8" });
+  navigator.sendBeacon(ENDPOINT, bodyBlob);
+}
 
-  const body = new Blob([JSON.stringify(payload)], { type: "text/plain;charset=utf-8" });
-  navigator.sendBeacon(ENDPOINT, body); // boolean: queued or not
-  setTimeout(() => {}, 2000);
-  getTop10(puzzleId).then((data) => {
-    if (data.ok) {
-      renderLeaderBoard(data.top);
-      console.log("Top scores updated after submission.");
-    } else {
-      console.error("Failed to fetch top scores:", data.error);
+function addScoreToLeaderBoard(initals, timeMs) {
+  let scoresArray = [];
+  for (let i = 0; i < 10; i++) {
+    const name = document.getElementById("name" + i).textContent;
+    const time = document.getElementById("time" + i).textContent;
+    if (name && time) {
+      const [hh, mm, ss] = time.split(":").map(Number);
+      const totalMs = ((hh * 3600) + (mm * 60) + ss) * 1000;
+      scoresArray.push({ initials: name, time_ms: totalMs });
     }
-  });
+  }
+  scoresArray.push({ initials: initals, time_ms: timeMs });
+  scoresArray.sort((a, b) => a.time_ms - b.time_ms);
+  if (scoresArray.length > 10) {
+    scoresArray = scoresArray.slice(0, 10);
+  }
+  renderLeaderBoard(scoresArray);
 }
 
 export function renderLeaderBoard(scoresArray) {

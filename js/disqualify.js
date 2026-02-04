@@ -6,6 +6,7 @@ import { isEditableCell, getCellMark } from "./board.js";
 let pendingDisqualifyAction = null;
 let pendingRevealAction = null;
 let isCheckboxWarning = false;
+let pendingSolutionCloseResolve = null;
 
 export function showDisqualifyWarning(message = "This action will disqualify this puzzle from leaderboard submission.", isCheckbox = false) {
   isCheckboxWarning = isCheckbox;
@@ -97,6 +98,9 @@ export async function showSolutionResult(isCorrect, incorrectCount = 0, customMe
   }
   
   overlay.classList.add("show");
+  return new Promise((resolve) => {
+    pendingSolutionCloseResolve = resolve;
+  });
 }
 
 export function hideSolutionResult() {
@@ -105,6 +109,11 @@ export function hideSolutionResult() {
     overlay.classList.remove("show");
   }
   pendingRevealAction = null;
+  if (pendingSolutionCloseResolve) {
+    const resolve = pendingSolutionCloseResolve;
+    pendingSolutionCloseResolve = null;
+    resolve();
+  }
 }
 
 /**

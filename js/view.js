@@ -20,6 +20,7 @@ export function setView(viewName) {
 
   if (viewName === "panel") {
     dom.panel && (dom.panel.style.display = "block");
+    refreshPanel();
     return;
   }
 
@@ -95,7 +96,17 @@ export async function loadThumbnails() {
   thumbnailsLoaded = true;
 }
 
+let currentCategory = "Easy"; // default
+
+export function refreshPanel() {
+  if (!currentCategory) return;
+  loadThumbnails().then(() => {
+    renderImageGrid(thumbnails[currentCategory]);
+  });
+}
+
 export async function selectCategory(category) {
+  currentCategory = category;
   dom.railButtons.forEach((b) => b.classList.toggle("active", b.dataset.category === category));
   await loadThumbnails();
   renderImageGrid(thumbnails[category]);
