@@ -134,7 +134,7 @@ export function renderImageGrid(items) {
     const tile = document.createElement("button");
     tile.type = "button";
     tile.className = "image-tile";
-    tile.dataset.id = item.id;
+    tile.id = item.id;
 
     // Image
     const img = document.createElement("img");
