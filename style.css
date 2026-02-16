@@ -216,7 +216,6 @@ body {
     grid-template-columns: repeat(5, var(--cell));
     grid-template-rows: repeat(5, var(--cell));
     width: calc(5 * var(--cell) + 2px);
-    border: 1px solid black;
 }
 
 .bigMS-grid {

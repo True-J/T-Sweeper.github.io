@@ -20,6 +20,7 @@ export const dom = {
   rulesBtn: byId("rulesBtn"),
   dailyPuzzleBtn: byId("dailyPuzzleBtn"),
   menuBtn: byId("menuBtn"),
+  leaderBoardBtn: byId("leaderBoardBtn"),
   leaderBoard: byId("leaderboard"),
   leaderBoardM: byId("leaderboardm"),
   leaderBoardName: byId("leaderboardName"),

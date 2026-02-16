@@ -1,6 +1,6 @@
 // js/view.js
 import { dom } from "./dom.js";
-import { appState, pastProgress, isPuzzleCompleted, getPuzzleCompletionTime } from "./state.js";
+import { appState, isPuzzleCompleted, getPuzzleCompletionTime } from "./state.js";
 import { getDailyPuzzleNumber, isMobile } from "./main.js";
 
 const viewEls = {
@@ -8,8 +8,6 @@ const viewEls = {
   rulesList: dom.rulesList,
   puzzleGameBox: dom.puzzleGameBox,
 };
-
-var thumbnailsLoaded = false;
 
 export function setView(viewName) {
   Object.values(viewEls).forEach((el) => el && (el.style.display = "none"));
@@ -100,6 +98,10 @@ let currentCategory = "Easy"; // default
 
 export function refreshPanel() {
   if (!currentCategory) return;
+  tempCategory = (currentCategory == "Easy") ? "Medium" : "Easy";
+  loadThumbnails().then(() => {
+    renderImageGrid(thumbnails[tempCategory]);
+  });
   loadThumbnails().then(() => {
     renderImageGrid(thumbnails[currentCategory]);
   });
@@ -111,6 +113,8 @@ export async function selectCategory(category) {
   await loadThumbnails();
   renderImageGrid(thumbnails[category]);
 }
+
+export var shouldLoadPuzzle = false;
 
 export function renderImageGrid(items) {
   if (!dom.panelBody) return;
@@ -153,8 +157,13 @@ export function renderImageGrid(items) {
     tile.append(img, label);
 
     tile.addEventListener("click", () => {
-      loadPuzzle(item.puzzleNumber);
-      setView("puzzleGameBox");
+      if (shouldLoadPuzzle){
+        loadPuzzle(item.puzzleNumber);
+        setView("puzzleGameBox");
+      } else {
+        //TODO: load the leaderboard instead of the puzzle
+        
+      }
     });
 
     grid.appendChild(tile);

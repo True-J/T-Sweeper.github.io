@@ -1,8 +1,8 @@
 // js/main.js
 import { dom } from "./dom.js";
-import { appState, loadPastProgressFromStorage } from "./state.js";
+import { loadPastProgressFromStorage } from "./state.js";
 import { initBoard, loadPuzzle } from "./board.js";
-import { setView, selectCategory, loadThumbnails } from "./view.js";
+import { setView, selectCategory, loadThumbnails, shouldLoadPuzzle } from "./view.js";
 import { wireSaveButtons, renderSaveList } from "./saves.js";
 import { wireRegionButtons, renderRegionList, applyRegionActiveHighlight } from "./regions.js";
 import { wireCheckSolutionButton, wireResetProgressButton } from "./actions.js";
@@ -25,12 +25,22 @@ dom.puzzleGameBox.style.display = "none";
 
 // Sidebar button wiring
 dom.menuBtn?.addEventListener("click", async () => {
+  shouldLoadPuzzle = true;
   await loadThumbnails();
   setView("panel");
   const active = dom.railButtons.find((b) => b.classList.contains("active"));
   if (!active && dom.railButtons[0]?.dataset?.category) selectCategory(dom.railButtons[0].dataset.category);
 });
 loadThumbnails();
+
+dom.leaderBoardBtn?.addEventListener("click", async () => {
+  shouldLoadPuzzle = false;
+  await loadThumbnails();
+  setView("panel");
+  const active = dom.railButtons.find((b) => b.classList.contains("active"));
+  if (!active && dom.railButtons[0]?.dataset?.category) selectCategory(dom.railButtons[0].dataset.category);
+
+});
 
 export function getDailyPuzzleNumber() {
   const todayUTC = new Date();
