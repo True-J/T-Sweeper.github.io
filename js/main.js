@@ -27,7 +27,7 @@ dom.puzzleGameBox.style.display = "none";
 dom.menuBtn?.addEventListener("click", async () => {
   shouldLoadPuzzle(true);
   await loadThumbnails();
-  setView("panel");
+  await setView("panel");
   const active = dom.railButtons.find((b) => b.classList.contains("active"));
   if (!active && dom.railButtons[0]?.dataset?.category) selectCategory(dom.railButtons[0].dataset.category);
 });
@@ -36,7 +36,7 @@ loadThumbnails();
 dom.leaderBoardBtn?.addEventListener("click", async () => {
   shouldLoadPuzzle(false);
   await loadThumbnails();
-  setView("panel");
+  await setView("panel");
   const active = dom.railButtons.find((b) => b.classList.contains("active"));
   if (!active && dom.railButtons[0]?.dataset?.category) selectCategory(dom.railButtons[0].dataset.category);
 
