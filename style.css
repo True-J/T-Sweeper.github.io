@@ -694,6 +694,7 @@ body {
 
     .image-tile .thumb {
         height: 160px;
+        background-color: #ffffff;
     }
 
     /* ---------------------------------------
