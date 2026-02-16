@@ -97,7 +97,7 @@ let currentCategory = "Easy"; // default
 
 export function refreshPanel() {
   if (!currentCategory) return;
-  tempCategory = (currentCategory == "Easy") ? "Medium" : "Easy";
+  let tempCategory = (currentCategory == "Easy") ? "Medium" : "Easy";
   loadThumbnails().then(() => {
     renderImageGrid(thumbnails[tempCategory]);
   });
