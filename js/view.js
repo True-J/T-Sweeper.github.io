@@ -99,6 +99,9 @@ export async function refreshPanel() {
   if (!currentCategory) return;
   let tempCategory = (currentCategory == "Easy") ? "Medium" : "Easy";
   loadThumbnails().then(() => {
+    renderImageGrid(thumbnails[currentCategory]);
+  });
+  loadThumbnails().then(() => {
     renderImageGrid(thumbnails[tempCategory]);
   });
   loadThumbnails().then(() => {
