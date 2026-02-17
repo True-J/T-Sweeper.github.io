@@ -1,7 +1,7 @@
 // js/actions.js
 import { BOARD_SIZE, appState, markPuzzleCompleted, pastProgress } from "./state.js";
 import { dom } from "./dom.js";
-import { isEditableCell, getCellEl, applyPlayerMarks, capturePlayerMarks } from "./board.js";
+import { isEditableCell, getCellEl, applyPlayerMarks } from "./board.js";
 import { stopTimer, startTimer, getElapsedMs } from "./timer.js";
 import { loadThumbnails } from "./view.js";
 import { showSolutionResult, requireDisqualifyConfirmation, setPendingRevealAction } from "./disqualify.js";
@@ -94,6 +94,7 @@ export function wireCheckSolutionButton() {
 function revealIncorrectCells() {
   hasRevealedCells(true, true);
   const solved = appState.curPuzzle.solvedPuzzle;  
+
   // Helper function to count mines visible from a cell
   function countVisibleMines(r, c) {
     let count = 0;
@@ -103,10 +104,8 @@ function revealIncorrectCells() {
         const nc = c + dc;
         if (nr >= 0 && nr < BOARD_SIZE && nc >= 0 && nc < BOARD_SIZE && (dr !== 0 || dc !== 0)) {
           const cell = getCellEl(nr, nc);
-          const mark = cell?.textContent ?? "";
-          if (mark === "F" || mark === "f") {
-            count++;
-          }
+          const mark = cell?.textContent.toLowerCase()[0] ?? "";
+          if (mark === "f") { count++; }
         }
       }
     }
@@ -117,47 +116,24 @@ function revealIncorrectCells() {
     for (let c = 0; c < BOARD_SIZE; c++) {
       const cell = getCellEl(r, c);
       if (!cell) continue;
-      
-      const unsolvedToken = appState.curPuzzle.unsolvedPuzzle?.[r]?.[c];
-      const solvedToken = solved?.[r]?.[c];
+      const cls = [...cell.classList].find(c => c.length === 2 && c.startsWith('c'));
+      const token = Number.isNaN(Number(cls[1])) ? cls[1] : Number(cls[1]);
+      const visibleMines = countVisibleMines(r, c);
       let shouldHighlight = false;
-      
-      // Criteria 1: F cell (given mine constraint) that has 0 or >1 mines it can see
-      if (unsolvedToken === "F") {
-        const visibleMines = countVisibleMines(r, c);
-        if (visibleMines === 0 || visibleMines > 1) {
-          shouldHighlight = true;
-        }
+      if (token == "F" && visibleMines != 1) {
+        shouldHighlight = true;
       }
-      // Criteria 2: Normal clue cell that can see less than or greater than its clue value
-      else if (typeof unsolvedToken === "number") {
-        const visibleMines = countVisibleMines(r, c);
-        if (visibleMines !== unsolvedToken) {
-          shouldHighlight = true;
-        }
+      else if (typeof token === "number" && visibleMines != token) {
+        shouldHighlight = true;
       }
-      // Criteria 3: Color clue that can see less than or greater than its clue value
-      else if (typeof solvedToken === "string" && solvedToken.length > 1) {
-        // Color clues have format like "c2", "f3", etc. (letter + number)
-        const clueValue = parseInt(solvedToken[1]);
-        const visibleMines = countVisibleMines(r, c);
-        if (visibleMines !== clueValue) {
-          shouldHighlight = true;
-        }
+      else if (typeof token === "string" && token.length == 2 && visibleMines != parseInt(token[1])) {
+        shouldHighlight = true;
       }
-      // Criteria 4: f cells see less than 2 or greater than 3 mines
-      else if (solvedToken === "f") {
-        const visibleMines = countVisibleMines(r, c);
-        if (visibleMines < 2 || visibleMines > 3) {
-          shouldHighlight = true;
-        }
+      else if (token == "f" && (visibleMines < 2 || visibleMines > 3)) {
+        shouldHighlight = true;
       }
-      // Criteria 5: x cells see less than 2 or greater than 4 mines
-      else if (solvedToken === "x") {
-        const visibleMines = countVisibleMines(r, c);
-        if (visibleMines < 2 || visibleMines > 4) {
-          shouldHighlight = true;
-        }
+      else if (token == "x" && (visibleMines < 2 || visibleMines > 4)) {
+        shouldHighlight = true;
       }
       if (shouldHighlight) {
         cell.classList.add("incorrect-reveal");

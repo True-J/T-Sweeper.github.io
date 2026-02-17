@@ -52,30 +52,14 @@ export var thumbnails = {
 };
 
 export async function loadThumbnails() {
-  const DIFFICULTIES = ["Easy", "Medium", "Hard", "Expert"];
-  for (let i = 0; i < DIFFICULTIES.length; i++) {
-    thumbnails[DIFFICULTIES[i]] = [];
-  }
-  const maxPuzzle = `Puzzle_${getDailyPuzzleNumber()}`;
+  Object.keys(thumbnails).forEach(key => { thumbnails[key] = []; });
+  let maxNum = getDailyPuzzleNumber() + 1;
   var puzzleList = [];
   try {
     const response = await fetch('Puzzles/PuzzleList.txt');
     puzzleList = await response.json();
   } catch (err) {
     console.error("Failed to load puzzle list:", err);
-  }
-  let maxNum = 0;
-  for (let i = 0; i < DIFFICULTIES.length; i++) {
-    let found = false;
-    let searchTerm = `${DIFFICULTIES[i]}/${maxPuzzle}`;
-    for (let j = 0; j < puzzleList.length; j++) {
-      found = (puzzleList[j] == searchTerm)
-      if (found) {
-        maxNum = j;
-        break;
-      }
-    }
-    if (found) break;
   }
   for (let i = 0; i < maxNum; i++) {
     let puzzleName = puzzleList[i]
@@ -97,17 +81,8 @@ let currentCategory = "Easy"; // default
 
 export async function refreshPanel() {
   if (!currentCategory) return;
-  let tempCategory = (currentCategory == "Easy") ? "Medium" : "Easy";
-  loadThumbnails().then(() => {
-    renderImageGrid(thumbnails[currentCategory]);
-  });
-  loadThumbnails().then(() => {
-    renderImageGrid(thumbnails[tempCategory]);
-  });
-  loadThumbnails().then(() => {
-    renderImageGrid(thumbnails[currentCategory]);
-  });
-  return;
+  await loadThumbnails();
+  renderImageGrid(thumbnails[currentCategory]);
 }
 
 export async function selectCategory(category) {
@@ -169,9 +144,8 @@ export function renderImageGrid(items) {
         
       }
     });
-    if (!document.getElementById(item.id)){
-      grid.appendChild(tile);
-    }
+    document.querySelectorAll(`#${CSS.escape(item.id)}`).forEach(el => el.remove());
+    grid.appendChild(tile);
   });
 
   dom.panelBody.appendChild(grid);

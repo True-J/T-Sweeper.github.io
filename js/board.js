@@ -6,9 +6,7 @@ import { updateMineHud, computeTotalMinesFromSolved } from "./hud.js";
 import { handleAutoResolveSchedulingForCell, resetAllRegions, renderRegionList } from "./regions.js";
 import { resetAllSaves, renderSaveList } from "./saves.js";
 import { showResumeRestartModal } from "./disqualify.js";
-import { hasRevealedCells } from "./actions.js";
-import { getTop10 } from "./leaderBoard.js";
-import { renderLeaderBoard } from "./leaderBoard.js";
+import { getTop10, renderLeaderBoard } from "./leaderBoard.js";
 
 export function initBoard() {
   if (!dom.gameBoard) return;

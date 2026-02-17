@@ -1,6 +1,5 @@
 // js/disqualify.js
 import { appState } from "./state.js";
-import { dom } from "./dom.js";
 import { isEditableCell, getCellMark } from "./board.js";
 
 let pendingDisqualifyAction = null;

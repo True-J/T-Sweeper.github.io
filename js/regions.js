@@ -3,7 +3,6 @@ import { BOARD_SIZE, appState, constants } from "./state.js";
 import { dom } from "./dom.js";
 import { getCellEl, getCellMark, isEditableCell, setCellMark } from "./board.js";
 import { updateMineHud } from "./hud.js";
-import { requireDisqualifyConfirmation } from "./disqualify.js";
 
 /* ---------- Draft UI helpers ---------- */
 function cellKey(r, c) {
