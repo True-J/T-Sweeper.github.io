@@ -142,12 +142,12 @@
     <div id="myTitle">
       <h1>Welcome to T-Sweeper</h1>
       <br>
-      <h3>A MineSweeper Variant I created</h3>
+      <h3>A Mine Sweeper Variant I created</h3>
       <br>
       <p>
         Were/Are you a child with a crap computer that didn't have many video games?<br>
-        Did you find some weird game installed on every computer called MineSweeper?<br>
-        Do you wish that you could play MineSweeper without needing that pesky computer?<br>
+        Did you find some weird game installed on every computer called Mine Sweeper?<br>
+        Do you wish that you could play Mine Sweeper without needing that pesky computer?<br>
         Do you work for the New York Times Puzzle Department and want to buy my T-Sweeper Puzzle creation
         software?<br><br>
         If you said yes to even a single one of these questions, particularly question 4, then this website is for
@@ -160,11 +160,11 @@
         <h3>Rules and Examples</h3>
         <br>
         <p class="rule-text">
-          Rule 1) All Normal MineSweeper rules apply. This is an alternate way to play MineSweeper that I created. <br>
-          <br> MineSweeper rules are that there are some number of mines on the puzzle board. Each cell contains a clue
+          Rule 1) All Normal Mine Sweeper rules apply. This is an alternate way to play Mine Sweeper that I created. <br>
+          <br> Mine Sweeper rules are that there are some number of mines on the puzzle board. Each cell contains a clue
           value
           <br> that tells you exactly how many mines are in the surrounding 8 cells (3 in a corner, 5 on a wall). <br>
-          <br> In normal MineSweeper, you are clicking on cells to reveal their clue, while avoiding clicking on cells
+          <br> In normal Mine Sweeper, you are clicking on cells to reveal their clue, while avoiding clicking on cells
           <br> with a mine. My puzzle is static. Your job here, is not to click on cells to reveal them, but to mark the
           cells
           <br> without any value written in them as either safe (x) or with a flag (f)
@@ -483,15 +483,821 @@
       <h3>Information about Data usage</h3>
       <br>
       <p class="rule-text">
-        I believe in complete transparancy for how I am using data and your computer's storage.<br>
-        Below is a complete list of everything that is getting saved to your local storage.<br><br>
-        1. I save a list of puzzles you've solved. This is exclusivly to update the thumbnails in the<br>
-        puzzle selection menu. I thought it would look cool to update those as you solve them.<br><br>
-        2. For the purpose of the leader boards, I am using your local storage to keep track of how long<br>
-        it takes you to solve a puzzle, and your progress in that puzzle. Like I said, I'm not going to<br>
-        implement any bot detection for cheating. This is just a friendly puzzle site. Please don't cheat.<br><br>
-        3. I am maintaining a google sheet for the leader boards. I store your 3 letter initals and your<br>
-        completion time when you submit your score.<br><br>
+        I believe in complete transparancy for how I am using data and your computer's storage. Below is a complete list of everything that is getting saved to your local storage.<br><br>
+        1. I save a list of puzzles you've solved. This is exclusivly to update the thumbnails in the puzzle selection menu. I thought it would look cool to update those as you solve them.<br><br>
+        2. For the purpose of the leader boards, I am using your local storage to keep track of how long it takes you to solve a puzzle, and your progress in that puzzle. Like I said, I'm not going to implement any bot detection for cheating. This is just a friendly puzzle site. Please don't cheat.<br><br>
+        3. I am maintaining a google sheet for the leader boards. I store your 3 letter initals and your completion time when you submit your score.<br><br>
+      </p>
+      <br>
+      <h3>Example Solve</h3>
+      <br>
+      <p class="rule-text">
+        We're going to walk through a puzzle and solve it together. That way you can see the various rules in action.<br><br>
+        In this puzzle, there are 15 mines in total, with 3 revealed.
+      </p>
+      <br>
+      <div class="rule-examples">
+        <div class="medMS-grid">
+          <div class="cell c2">2</div>
+          <div class="cell cF">F</div>
+          <div class="cell c2">2</div>
+          <div class="cell ce"> </div>
+          <div class="cell ce"> </div>
+          <div class="cell ce"> </div>
+          <div class="cell c0">0</div>
+
+          <div class="cell ce"> </div>
+          <div class="cell ce"> </div>
+          <div class="cell ce"> </div>
+          <div class="cell ce"> </div>
+          <div class="cell ce"> </div>
+          <div class="cell ce"> </div>
+          <div class="cell c0">0</div>
+
+          <div class="cell ce"> </div>
+          <div class="cell ce"> </div>
+          <div class="cell cF">F</div>
+          <div class="cell c2">2</div>
+          <div class="cell c1">1</div>
+          <div class="cell c1">1</div>
+          <div class="cell c0">0</div>
+
+          <div class="cell c1">1</div>
+          <div class="cell ce"> </div>
+          <div class="cell ce"> </div>
+          <div class="cell ce"> </div>
+          <div class="cell c1">1</div>
+          <div class="cell c1">1</div>
+          <div class="cell c1">1</div>
+
+          <div class="cell c0">0</div>
+          <div class="cell c1">1</div>
+          <div class="cell ce"> </div>
+          <div class="cell ce"> </div>
+          <div class="cell ce"> </div>
+          <div class="cell ce"> </div>
+          <div class="cell ce"> </div>
+
+          <div class="cell c0">0</div>
+          <div class="cell c1">1</div>
+          <div class="cell ce"> </div>
+          <div class="cell ce"> </div>
+          <div class="cell c5">5</div>
+          <div class="cell ce"> </div>
+          <div class="cell ce"> </div>
+
+          <div class="cell c0">0</div>
+          <div class="cell c0">0</div>
+          <div class="cell c2">2</div>
+          <div class="cell cF">F</div>
+          <div class="cell ce"> </div>
+          <div class="cell ce"> </div>
+          <div class="cell c3"> </div>
+        </div>
+        <!-- Text -->
+        <div class="rule-textex">
+          <p>
+            First, we can handle all of the obvious stuff. These are the things that can be solved using normal Mine Sweeper rules.
+            The only real different thing is the Color Clue 3 in the bottom right corner. Color Clues can act like they have the value
+            as their clue number, but it does not tell you if the cell itself contains a mine or not. That gives us the following grid.
+          </p>
+        </div>
+        <div class="medMS-grid">
+          <div class="cell c2">2</div>
+          <div class="cell cF">F</div>
+          <div class="cell c2">2</div>
+          <div class="cell ce"> </div>
+          <div class="cell ce"> </div>
+          <div class="cell ce incorrect-reveal">x</div>
+          <div class="cell c0">0</div>
+
+          <div class="cell ce"> </div>
+          <div class="cell ce"> </div>
+          <div class="cell ce incorrect-reveal">x</div>
+          <div class="cell ce incorrect-reveal">x</div>
+          <div class="cell ce incorrect-reveal">f</div>
+          <div class="cell ce incorrect-reveal">x</div>
+          <div class="cell c0">0</div>
+
+          <div class="cell ce"> </div>
+          <div class="cell ce"> </div>
+          <div class="cell cF">F</div>
+          <div class="cell c2">2</div>
+          <div class="cell c1">1</div>
+          <div class="cell c1">1</div>
+          <div class="cell c0">0</div>
+
+          <div class="cell c1">1</div>
+          <div class="cell ce incorrect-reveal">x</div>
+          <div class="cell ce incorrect-reveal">x</div>
+          <div class="cell ce incorrect-reveal">x</div>
+          <div class="cell c1">1</div>
+          <div class="cell c1">1</div>
+          <div class="cell c1">1</div>
+
+          <div class="cell c0">0</div>
+          <div class="cell c1">1</div>
+          <div class="cell ce incorrect-reveal">f</div>
+          <div class="cell ce"> </div>
+          <div class="cell ce incorrect-reveal">x</div>
+          <div class="cell ce"> </div>
+          <div class="cell ce"> </div>
+
+          <div class="cell c0">0</div>
+          <div class="cell c1">1</div>
+          <div class="cell ce incorrect-reveal">x</div>
+          <div class="cell ce"> </div>
+          <div class="cell c5">5</div>
+          <div class="cell ce incorrect-reveal">f</div>
+          <div class="cell ce incorrect-reveal">f</div>
+
+          <div class="cell c0">0</div>
+          <div class="cell c0">0</div>
+          <div class="cell c2">2</div>
+          <div class="cell cF">F</div>
+          <div class="cell ce"> </div>
+          <div class="cell ce incorrect-reveal">f</div>
+          <div class="cell c3"> </div>
+        </div>
+      </div>
+      <br>
+      <div class="rule-examples">
+        <div class="medMS-grid">
+          <div class="cell c2">2</div>
+          <div class="cell cF">F</div>
+          <div class="cell c2">2</div>
+          <div class="cell ce"> </div>
+          <div class="cell ce"> </div>
+          <div class="cell cx incorrect-reveal">x</div>
+          <div class="cell c0">0</div>
+
+          <div class="cell ce"> </div>
+          <div class="cell ce"> </div>
+          <div class="cell cx">x</div>
+          <div class="cell cx">x</div>
+          <div class="cell cf">f</div>
+          <div class="cell cx incorrect-reveal">x</div>
+          <div class="cell c0">0</div>
+
+          <div class="cell ce"> </div>
+          <div class="cell ce"> </div>
+          <div class="cell cF">F</div>
+          <div class="cell c2">2</div>
+          <div class="cell c1">1</div>
+          <div class="cell c1">1</div>
+          <div class="cell c0">0</div>
+
+          <div class="cell c1">1</div>
+          <div class="cell cx">x</div>
+          <div class="cell cx">x</div>
+          <div class="cell cx">x</div>
+          <div class="cell c1">1</div>
+          <div class="cell c1">1</div>
+          <div class="cell c1">1</div>
+
+          <div class="cell c0">0</div>
+          <div class="cell c1">1</div>
+          <div class="cell cf incorrect-reveal">f</div>
+          <div class="cell ce"> </div>
+          <div class="cell cx">x</div>
+          <div class="cell ce"> </div>
+          <div class="cell ce"> </div>
+
+          <div class="cell c0">0</div>
+          <div class="cell c1">1</div>
+          <div class="cell cx">x</div>
+          <div class="cell ce"> </div>
+          <div class="cell c5">5</div>
+          <div class="cell cf">f</div>
+          <div class="cell cf">f</div>
+
+          <div class="cell c0">0</div>
+          <div class="cell c0">0</div>
+          <div class="cell c2">2</div>
+          <div class="cell cF">F</div>
+          <div class="cell ce"> </div>
+          <div class="cell cf">f</div>
+          <div class="cell c3"> </div>
+        </div>
+        <div class="rule-textex">
+          <p>
+            Now at this point we have to use T-Sweeper rules.<br><br>
+            1. First, if we look at the top right. Any cell that contains a 1 must be revealed. Those two x cells
+            are not revealed. Therefore, they cannot be a 1. Therefore, they must see more than 1 mine.<br><br>
+            The pattern we can get from this is that, based on rules 2 and 5, if a cell is an x, then it must
+            see at least 2 non-gray flags. So if you know a cell contains an x, and it currently only sees gray flags, and
+            the number of open spaces it sees is 2, then both of those cells contain a mine.<br><br>
+            2. If we look at the regular flag in the lower left quarter of the puzzle. It can see exactly 2 open spaces.
+            Any cell that contains a non-gray flag has to see at least 2 other flags. The two flags it can see can be 
+            gray or non-gray.<br><br>
+            The pattern weget from this is that, based on rule 3 and 4, if a flag is not a gray flag, and it can see
+            exactly 2 open spaces, then both of those open spaces contain a mine.
+          </p>
+        </div>
+        <div class="medMS-grid">
+          <div class="cell c2">2</div>
+          <div class="cell cF">F</div>
+          <div class="cell c2">2</div>
+          <div class="cell ce"> </div>
+          <div class="cell ce incorrect-reveal">f</div>
+          <div class="cell cx">x</div>
+          <div class="cell c0">0</div>
+
+          <div class="cell ce"> </div>
+          <div class="cell ce"> </div>
+          <div class="cell cx">x</div>
+          <div class="cell cx">x</div>
+          <div class="cell cf">f</div>
+          <div class="cell cx">x</div>
+          <div class="cell c0">0</div>
+
+          <div class="cell ce"> </div>
+          <div class="cell ce"> </div>
+          <div class="cell cF">F</div>
+          <div class="cell c2">2</div>
+          <div class="cell c1">1</div>
+          <div class="cell c1">1</div>
+          <div class="cell c0">0</div>
+
+          <div class="cell c1">1</div>
+          <div class="cell cx">x</div>
+          <div class="cell cx">x</div>
+          <div class="cell cx">x</div>
+          <div class="cell c1">1</div>
+          <div class="cell c1">1</div>
+          <div class="cell c1">1</div>
+
+          <div class="cell c0">0</div>
+          <div class="cell c1">1</div>
+          <div class="cell cf">f</div>
+          <div class="cell ce incorrect-reveal">f</div>
+          <div class="cell cx">x</div>
+          <div class="cell ce"> </div>
+          <div class="cell ce"> </div>
+
+          <div class="cell c0">0</div>
+          <div class="cell c1">1</div>
+          <div class="cell cx">x</div>
+          <div class="cell ce incorrect-reveal">f</div>
+          <div class="cell c5">5</div>
+          <div class="cell cf">f</div>
+          <div class="cell cf">f</div>
+
+          <div class="cell c0">0</div>
+          <div class="cell c0">0</div>
+          <div class="cell c2">2</div>
+          <div class="cell cF">F</div>
+          <div class="cell ce"> </div>
+          <div class="cell cf">f</div>
+          <div class="cell c3"> </div>
+        </div>
+      </div>
+      <br>
+      <div class="rule-examples">
+        <div class="medMS-grid">
+          <div class="cell c2">2</div>
+          <div class="cell cF">F</div>
+          <div class="cell c2">2</div>
+          <div class="cell ce"> </div>
+          <div class="cell cf">f</div>
+          <div class="cell cx">x</div>
+          <div class="cell c0">0</div>
+
+          <div class="cell ce"> </div>
+          <div class="cell ce"> </div>
+          <div class="cell cx">x</div>
+          <div class="cell cx">x</div>
+          <div class="cell cf">f</div>
+          <div class="cell cx">x</div>
+          <div class="cell c0">0</div>
+
+          <div class="cell ce"> </div>
+          <div class="cell ce"> </div>
+          <div class="cell cF">F</div>
+          <div class="cell c2">2</div>
+          <div class="cell c1">1</div>
+          <div class="cell c1">1</div>
+          <div class="cell c0">0</div>
+
+          <div class="cell c1">1</div>
+          <div class="cell cx">x</div>
+          <div class="cell cx">x</div>
+          <div class="cell cx">x</div>
+          <div class="cell c1">1</div>
+          <div class="cell c1">1</div>
+          <div class="cell c1">1</div>
+
+          <div class="cell c0">0</div>
+          <div class="cell c1">1</div>
+          <div class="cell cf">f</div>
+          <div class="cell cf">f</div>
+          <div class="cell cx">x</div>
+          <div class="cell ce"> </div>
+          <div class="cell ce"> </div>
+
+          <div class="cell c0">0</div>
+          <div class="cell c1">1</div>
+          <div class="cell cx">x</div>
+          <div class="cell cf">f</div>
+          <div class="cell c5">5</div>
+          <div class="cell cf">f</div>
+          <div class="cell cf">f</div>
+
+          <div class="cell c0">0</div>
+          <div class="cell c0">0</div>
+          <div class="cell c2">2</div>
+          <div class="cell cF">F</div>
+          <div class="cell ce incorrect-reveal"> </div>
+          <div class="cell cf">f</div>
+          <div class="cell c3"> </div>
+        </div>
+        <div class="rule-textex">
+          <p>
+            From here we can solve a few cells using normal mine sweeper logic, such as around the 5, 
+            although I do want to point out the cell directly below the 5, as there are several ways to solve it.<br><br>
+            1. The cell itself can see 4 flags. Because it would contradict rule 4, this cell cannot contain a mine, and is therefore an x.<br><br>
+            2. The gray flag next to it can see a flag, which by rule 3, means that any other open space the gray flag can see must be an x.<br><br>
+            3. The regular flag to its top left can see 3 flags, which by rule 4 means that any other open spaces it can see must be an x.<br><br>
+            4. Lastly, because the 5 above it can already see 5 mines, by normal mine sweeper rules, it must be an x.<br><br>
+            So, from here, let's fill in the grid based on normal minesweeper rules.
+          </p>
+        </div>
+        <div class="medMS-grid">
+          <div class="cell c2">2</div>
+          <div class="cell cF">F</div>
+          <div class="cell c2">2</div>
+          <div class="cell ce"> </div>
+          <div class="cell cf">f</div>
+          <div class="cell cx">x</div>
+          <div class="cell c0">0</div>
+
+          <div class="cell ce"> </div>
+          <div class="cell ce"> </div>
+          <div class="cell cx">x</div>
+          <div class="cell cx">x</div>
+          <div class="cell cf">f</div>
+          <div class="cell cx">x</div>
+          <div class="cell c0">0</div>
+
+          <div class="cell ce"> </div>
+          <div class="cell ce"> </div>
+          <div class="cell cF">F</div>
+          <div class="cell c2">2</div>
+          <div class="cell c1">1</div>
+          <div class="cell c1">1</div>
+          <div class="cell c0">0</div>
+
+          <div class="cell c1">1</div>
+          <div class="cell cx">x</div>
+          <div class="cell cx">x</div>
+          <div class="cell cx">x</div>
+          <div class="cell c1">1</div>
+          <div class="cell c1">1</div>
+          <div class="cell c1">1</div>
+
+          <div class="cell c0">0</div>
+          <div class="cell c1">1</div>
+          <div class="cell cf">f</div>
+          <div class="cell cf">f</div>
+          <div class="cell cx">x</div>
+          <div class="cell ce incorrect-reveal">x</div>
+          <div class="cell ce incorrect-reveal">f</div>
+
+          <div class="cell c0">0</div>
+          <div class="cell c1">1</div>
+          <div class="cell cx">x</div>
+          <div class="cell cf">f</div>
+          <div class="cell c5">5</div>
+          <div class="cell cf">f</div>
+          <div class="cell cf">f</div>
+
+          <div class="cell c0">0</div>
+          <div class="cell c0">0</div>
+          <div class="cell c2">2</div>
+          <div class="cell cF">F</div>
+          <div class="cell ce incorrect-reveal">x</div>
+          <div class="cell cf">f</div>
+          <div class="cell c3"> </div>
+        </div>
+      </div>
+      <br>
+      <div class="rule-examples">
+        <div class="medMS-grid">
+          <div class="cell c2">2</div>
+          <div class="cell cF">F</div>
+          <div class="cell c2">2</div>
+          <div class="cell ce"> </div>
+          <div class="cell cf">f</div>
+          <div class="cell cx">x</div>
+          <div class="cell c0">0</div>
+
+          <div class="cell ce"> </div>
+          <div class="cell ce"> </div>
+          <div class="cell cx">x</div>
+          <div class="cell cx">x</div>
+          <div class="cell cf incorrect-reveal">f</div>
+          <div class="cell cx">x</div>
+          <div class="cell c0">0</div>
+
+          <div class="cell ce"> </div>
+          <div class="cell ce"> </div>
+          <div class="cell cF">F</div>
+          <div class="cell c2">2</div>
+          <div class="cell c1">1</div>
+          <div class="cell c1">1</div>
+          <div class="cell c0">0</div>
+
+          <div class="cell c1">1</div>
+          <div class="cell cx">x</div>
+          <div class="cell cx">x</div>
+          <div class="cell cx">x</div>
+          <div class="cell c1">1</div>
+          <div class="cell c1">1</div>
+          <div class="cell c1">1</div>
+
+          <div class="cell c0">0</div>
+          <div class="cell c1">1</div>
+          <div class="cell cf">f</div>
+          <div class="cell cf">f</div>
+          <div class="cell cx">x</div>
+          <div class="cell cx">x</div>
+          <div class="cell cf">f</div>
+
+          <div class="cell c0">0</div>
+          <div class="cell c1">1</div>
+          <div class="cell cx">x</div>
+          <div class="cell cf">f</div>
+          <div class="cell c5">5</div>
+          <div class="cell cf incorrect-reveal">f</div>
+          <div class="cell cf">f</div>
+
+          <div class="cell c0">0</div>
+          <div class="cell c0">0</div>
+          <div class="cell c2">2</div>
+          <div class="cell cF">F</div>
+          <div class="cell cx">x</div>
+          <div class="cell cf">f</div>
+          <div class="cell c3"> </div>
+        </div>
+        <div class="rule-textex">
+          <p>
+            1. Look at the highlighted cell in the bottom right. This cell contains a mine, and can see 3 flags.
+            Therefore, because of rule 4, the color clue in the bottom right corner must be an x.<br><br>
+            2. Because the highlighted cell in the top right quarter of the puzzle is not a gray flag, it must see
+            more than just 1 mine. Therefore the open cell it can see must be an f.
+          </p>
+        </div>
+        <div class="medMS-grid">
+          <div class="cell c2">2</div>
+          <div class="cell cF">F</div>
+          <div class="cell c2">2</div>
+          <div class="cell ce incorrect-reveal">f</div>
+          <div class="cell cf">f</div>
+          <div class="cell cx">x</div>
+          <div class="cell c0">0</div>
+
+          <div class="cell ce"> </div>
+          <div class="cell ce"> </div>
+          <div class="cell cx">x</div>
+          <div class="cell cx">x</div>
+          <div class="cell cf">f</div>
+          <div class="cell cx">x</div>
+          <div class="cell c0">0</div>
+
+          <div class="cell ce"> </div>
+          <div class="cell ce"> </div>
+          <div class="cell cF">F</div>
+          <div class="cell c2">2</div>
+          <div class="cell c1">1</div>
+          <div class="cell c1">1</div>
+          <div class="cell c0">0</div>
+
+          <div class="cell c1">1</div>
+          <div class="cell cx">x</div>
+          <div class="cell cx">x</div>
+          <div class="cell cx">x</div>
+          <div class="cell c1">1</div>
+          <div class="cell c1">1</div>
+          <div class="cell c1">1</div>
+
+          <div class="cell c0">0</div>
+          <div class="cell c1">1</div>
+          <div class="cell cf">f</div>
+          <div class="cell cf">f</div>
+          <div class="cell cx">x</div>
+          <div class="cell cx">x</div>
+          <div class="cell cf">f</div>
+
+          <div class="cell c0">0</div>
+          <div class="cell c1">1</div>
+          <div class="cell cx">x</div>
+          <div class="cell cf">f</div>
+          <div class="cell c5">5</div>
+          <div class="cell cf">f</div>
+          <div class="cell cf">f</div>
+
+          <div class="cell c0">0</div>
+          <div class="cell c0">0</div>
+          <div class="cell c2">2</div>
+          <div class="cell cF">F</div>
+          <div class="cell cx">x</div>
+          <div class="cell cf">f</div>
+          <div class="cell c3 incorrect-reveal">x</div>
+        </div>
+      </div>
+      <br>
+      <div class="rule-examples">
+        <div class="medMS-grid">
+          <div class="cell c2">2</div>
+          <div class="cell cF incorrect-reveal">F</div>
+          <div class="cell c2 incorrect-reveal">2</div>
+          <div class="cell cf">f</div>
+          <div class="cell cf">f</div>
+          <div class="cell cx">x</div>
+          <div class="cell c0">0</div>
+
+          <div class="cell ce"> </div>
+          <div class="cell ce"> </div>
+          <div class="cell cx">x</div>
+          <div class="cell cx">x</div>
+          <div class="cell cf">f</div>
+          <div class="cell cx">x</div>
+          <div class="cell c0">0</div>
+
+          <div class="cell ce"> </div>
+          <div class="cell ce"> </div>
+          <div class="cell cF">F</div>
+          <div class="cell c2">2</div>
+          <div class="cell c1">1</div>
+          <div class="cell c1">1</div>
+          <div class="cell c0">0</div>
+
+          <div class="cell c1">1</div>
+          <div class="cell cx">x</div>
+          <div class="cell cx">x</div>
+          <div class="cell cx">x</div>
+          <div class="cell c1">1</div>
+          <div class="cell c1">1</div>
+          <div class="cell c1">1</div>
+
+          <div class="cell c0">0</div>
+          <div class="cell c1">1</div>
+          <div class="cell cf">f</div>
+          <div class="cell cf">f</div>
+          <div class="cell cx">x</div>
+          <div class="cell cx">x</div>
+          <div class="cell cf">f</div>
+
+          <div class="cell c0">0</div>
+          <div class="cell c1">1</div>
+          <div class="cell cx">x</div>
+          <div class="cell cf">f</div>
+          <div class="cell c5">5</div>
+          <div class="cell cf">f</div>
+          <div class="cell cf">f</div>
+
+          <div class="cell c0">0</div>
+          <div class="cell c0">0</div>
+          <div class="cell c2">2</div>
+          <div class="cell cF">F</div>
+          <div class="cell cx">x</div>
+          <div class="cell cf">f</div>
+          <div class="cell c3">x</div>
+        </div>
+        <div class="rule-textex">
+          <p>
+            Using normal mine sweeper rules we can fill in the open cell to the bottom left of the 2 in the middle of the top row with an x.<br><br>
+            This forces (by rule 3) the cell to the bottom left of the gray flag to be an f, leaving us with just 2 open spaces left in the puzzle.
+          </p>
+        </div>
+        <div class="medMS-grid">
+          <div class="cell c2">2</div>
+          <div class="cell cF">F</div>
+          <div class="cell c2">2</div>
+          <div class="cell cf">f</div>
+          <div class="cell cf">f</div>
+          <div class="cell cx">x</div>
+          <div class="cell c0">0</div>
+
+          <div class="cell ce incorrect-reveal">f</div>
+          <div class="cell ce incorrect-reveal">x</div>
+          <div class="cell cx">x</div>
+          <div class="cell cx">x</div>
+          <div class="cell cf">f</div>
+          <div class="cell cx">x</div>
+          <div class="cell c0">0</div>
+
+          <div class="cell ce"> </div>
+          <div class="cell ce"> </div>
+          <div class="cell cF">F</div>
+          <div class="cell c2">2</div>
+          <div class="cell c1">1</div>
+          <div class="cell c1">1</div>
+          <div class="cell c0">0</div>
+
+          <div class="cell c1">1</div>
+          <div class="cell cx">x</div>
+          <div class="cell cx">x</div>
+          <div class="cell cx">x</div>
+          <div class="cell c1">1</div>
+          <div class="cell c1">1</div>
+          <div class="cell c1">1</div>
+
+          <div class="cell c0">0</div>
+          <div class="cell c1">1</div>
+          <div class="cell cf">f</div>
+          <div class="cell cf">f</div>
+          <div class="cell cx">x</div>
+          <div class="cell cx">x</div>
+          <div class="cell cf">f</div>
+
+          <div class="cell c0">0</div>
+          <div class="cell c1">1</div>
+          <div class="cell cx">x</div>
+          <div class="cell cf">f</div>
+          <div class="cell c5">5</div>
+          <div class="cell cf">f</div>
+          <div class="cell cf">f</div>
+
+          <div class="cell c0">0</div>
+          <div class="cell c0">0</div>
+          <div class="cell c2">2</div>
+          <div class="cell cF">F</div>
+          <div class="cell cx">x</div>
+          <div class="cell cf">f</div>
+          <div class="cell c3">x</div>
+        </div>
+      </div>
+      <br>
+      <div class="rule-examples">
+        <div class="medMS-grid">
+          <div class="cell c2">2</div>
+          <div class="cell cF">F</div>
+          <div class="cell c2">2</div>
+          <div class="cell cf">f</div>
+          <div class="cell cf">f</div>
+          <div class="cell cx">x</div>
+          <div class="cell c0">0</div>
+
+          <div class="cell cf">f</div>
+          <div class="cell cx">x</div>
+          <div class="cell cx incorrect-reveal">x</div>
+          <div class="cell cx">x</div>
+          <div class="cell cf">f</div>
+          <div class="cell cx">x</div>
+          <div class="cell c0">0</div>
+
+          <div class="cell ce"> </div>
+          <div class="cell ce"> </div>
+          <div class="cell cF incorrect-reveal">F</div>
+          <div class="cell c2">2</div>
+          <div class="cell c1">1</div>
+          <div class="cell c1">1</div>
+          <div class="cell c0">0</div>
+
+          <div class="cell c1 incorrect-reveal">1</div>
+          <div class="cell cx">x</div>
+          <div class="cell cx">x</div>
+          <div class="cell cx">x</div>
+          <div class="cell c1">1</div>
+          <div class="cell c1">1</div>
+          <div class="cell c1">1</div>
+
+          <div class="cell c0">0</div>
+          <div class="cell c1">1</div>
+          <div class="cell cf">f</div>
+          <div class="cell cf">f</div>
+          <div class="cell cx">x</div>
+          <div class="cell cx">x</div>
+          <div class="cell cf">f</div>
+
+          <div class="cell c0">0</div>
+          <div class="cell c1">1</div>
+          <div class="cell cx">x</div>
+          <div class="cell cf">f</div>
+          <div class="cell c5">5</div>
+          <div class="cell cf">f</div>
+          <div class="cell cf">f</div>
+
+          <div class="cell c0">0</div>
+          <div class="cell c0">0</div>
+          <div class="cell c2">2</div>
+          <div class="cell cF">F</div>
+          <div class="cell cx">x</div>
+          <div class="cell cf">f</div>
+          <div class="cell c3">x</div>
+        </div>
+        <div class="rule-textex">
+          <p>
+            There are 3 ways we can solve the final mine for this puzzle. They are all important for solving harder puzzles.<br><br>
+            I've highlighted 3 cells, an x, a 1, and an F.<br><br>
+            The x) Look at rule 5. This x can see 2 gray flags and 1 regular flag. Since this cell contains an x, the clue value here
+            must be a 2, 3, or 4. It can't be a 2 because it can see 3 flags already. What about a 3? Apply the formula is rule 5.<br><br>
+            Clue - Gray Flags <= 1 | 3 - 2 <= 1<br><br>
+            This is True, and therefore the cell is required to be revealed to the player.<br>
+            Since this cell is not revealed, the clue here cannot be a 3. Therefore, it must be a 4. Making the only open space it can see
+            an x. This is what I meant earlier that every cell that contains an x must see at least 2 non-gray flags.<br><br>
+            The 1) Assume the cell directly above the 1 is the mine. That would make the cell to the upper right of the 1 an x. Now consider
+            the mine we just created. How many cells can it see that contain mines? The answer is 1. That would make this mine a gray flag.
+            Gray flags, as per rule 3, must be revealed to the player. Since this cell isn't revealed to the player, it cannot be a mine.
+            Therefore the cell directly above the 1, is an x.<br><br>
+            The F) Bcause of rule 3, gray flags must see exactly 1 mine. This gray flag currently sees no mines, but it can see 1 open space.
+            That forces that open space to be a mine. Which then we would either use the 1 and normal mine sweeper logic, or we could count
+            the number of flags we've placed, to find that we have now placed 15 flags, which completes the puzzle.
+          </p>
+        </div>
+        <div class="medMS-grid">
+          <div class="cell c2">2</div>
+          <div class="cell cF">F</div>
+          <div class="cell c2">2</div>
+          <div class="cell cf">f</div>
+          <div class="cell cf">f</div>
+          <div class="cell cx">x</div>
+          <div class="cell c0">0</div>
+
+          <div class="cell cf">f</div>
+          <div class="cell cx">x</div>
+          <div class="cell cx">x</div>
+          <div class="cell cx">x</div>
+          <div class="cell cf">f</div>
+          <div class="cell cx">x</div>
+          <div class="cell c0">0</div>
+
+          <div class="cell ce incorrect-reveal">x</div>
+          <div class="cell ce incorrect-reveal">f</div>
+          <div class="cell cF">F</div>
+          <div class="cell c2">2</div>
+          <div class="cell c1">1</div>
+          <div class="cell c1">1</div>
+          <div class="cell c0">0</div>
+
+          <div class="cell c1">1</div>
+          <div class="cell cx">x</div>
+          <div class="cell cx">x</div>
+          <div class="cell cx">x</div>
+          <div class="cell c1">1</div>
+          <div class="cell c1">1</div>
+          <div class="cell c1">1</div>
+
+          <div class="cell c0">0</div>
+          <div class="cell c1">1</div>
+          <div class="cell cf">f</div>
+          <div class="cell cf">f</div>
+          <div class="cell cx">x</div>
+          <div class="cell cx">x</div>
+          <div class="cell cf">f</div>
+
+          <div class="cell c0">0</div>
+          <div class="cell c1">1</div>
+          <div class="cell cx">x</div>
+          <div class="cell cf">f</div>
+          <div class="cell c5">5</div>
+          <div class="cell cf">f</div>
+          <div class="cell cf">f</div>
+
+          <div class="cell c0">0</div>
+          <div class="cell c0">0</div>
+          <div class="cell c2">2</div>
+          <div class="cell cF">F</div>
+          <div class="cell cx">x</div>
+          <div class="cell cf">f</div>
+          <div class="cell c3">x</div>
+        </div>
+      </div>
+      <br><br>
+      <p>
+        So, as you can see, the rules create a set of cells which are required to be revealed to the player.<br>
+        You can use these rules, and the fact that cells do not meet the requirements within these rules, to solve 
+        puzzles.<br><br>
+        In fact, that's how I create these puzzles. My generator creates a random puzzle grid that fits all of the 
+        rules for mine placement (forcing all mines to see 1, 2 or 3 other mines, and removing any that see 0 mines).<br>
+        Then, I create the puzzle by finding all of the cells that are forced to be revealed by these rules.<br><br>
+        From there, I use mine sweeper logic combined with the methods described in the above solve example, to see
+        just how far I can solve the puzzle. Then from there, the generator creates color clues until the puzzle is
+        solvable.<br><br>
+        Lastly, I do one final check for solvability, and I rank the puzzle based on how many logical steps it takes
+        to solve it. By just using the steps shown in the above example and normal mine sweeper logic, you should be
+        able to solve pretty much all of the Easy and Medium puzzles. The Hard puzzles will usually involve some contradition
+        searching, where you guess if a cell is an x or an f, and see if the puzzle results in any contradictions.<br>
+        The Expert puzzles always involve contradiction searches, and the hardest ones involve searching through disconnected
+        regions for contradictions.<br><br>
+        For example, region searching would look like: Assume you have 2 disconnected regions. Region 1 has at least 2 mines 
+        and at most 4 mines. Region 2 has at least 3 mines and at most 5 mines. The puzzle has only 6 mines left to place. 
+        Therefore, any soluton that would place 4 mines in Region 1 or 5 mines in Region 2 must be incorrect.<br><br>
+        My puzzle generator creates 98 puzzles at a time. That is 14 weeks of puzzles. It then orders them based on difficulty.
+        So, Day 1 has the easiest puzzle. Day 8 has the second easiest. Monday of week 14 has the 14th easiest puzzle. 
+        Tuesday of week 1 has the 15th easiest puzzle. The pattern breaks on Sundays. The 14 hardest puzzles are interlaced.<br>
+        Sunday of Week 1 has the 14th hardest puzzle. Sunday of Week 2 has the 7th hardest puzzle. Sunday of Week 3 has the
+        13th hardest puzzle, and so on. So, Sunday of Week 14 is the hardest puzzle of the 98 puzzles in that group.<br><br>
+        The start of Week 1 for the first 98 puzzles was on January 5th 2026. So, Sunday, April 12th 2026 will be the hardest puzzle
+        of the group. Monday, April 13th 2026, will be the easiest puzzle of puzzle group 2.
+      </p>
+      <h3>Concluding Thoughts</h3>
+      <br>
+      <p>
+        Thank you for coming to my website and playing my puzzles. A new puzzle is available at midnight UTC every day.<br><br>
+        Feel free to contact me at JTStudyNotes@gmail.com with any comments, questions, or suggestions.<br><br>
+        Thanks!
       </p>
     </div>
   </div>
